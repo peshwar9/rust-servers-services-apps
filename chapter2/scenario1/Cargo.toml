@@ -1,0 +1,12 @@
+[package]
+name = "scenario1"
+version = "0.1.0"
+authors = ["peshwar9"]
+edition = "2018"
+
+
+ [workspace]
+  members = [
+      "tcpserver","tcpclient", "http", "httpserver",
+  ]
+[dependencies]

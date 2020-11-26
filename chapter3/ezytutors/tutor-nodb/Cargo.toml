@@ -1,0 +1,21 @@
+[package]
+name = "tutor-nodb"
+version = "0.1.0"
+authors = ["peshwar9"]
+edition = "2018"
+default-run = "tutor-service"
+
+
+[[bin]]
+name = "basic-server"
+
+[[bin]]
+name = "tutor-service"
+
+[dependencies]
+actix-web = "3.1.0"
+actix-rt = "1.1.1"
+# Data serialization library
+serde = { version = "1.0.110", features = ["derive"] }
+# Other utilities
+chrono = {version = "0.4.11", features = ["serde"]}

@@ -1,0 +1,12 @@
+[package]
+name = "ezytutors"
+version = "0.1.0"
+authors = ["peshwar9"]
+edition = "2018"
+
+
+ 
+[workspace]
+members = ["tutor-nodb"]
+
+[dependencies]

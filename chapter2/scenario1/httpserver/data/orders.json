@@ -1,0 +1,12 @@
+[
+    { 
+        "order_id": 1,
+        "order_date": "21 Jan 2020", 
+        "order_status": "Delivered"
+    }, 
+    {
+        "order_id": 2, 
+        "order_date": "2 Feb 2020", 
+        "order_status": "Pending"
+    } 
+]
