@@ -12,7 +12,7 @@ pub async fn health_check_handler() -> impl Responder {
     HttpResponse::Ok().json("Hello. EzyTutors is alive and kicking")
 }
 
-// Instantiate and run the HTTP server 
+// Instantiate and run the HTTP server
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
     // Construct app and configure routes <3>
@@ -20,4 +20,4 @@ async fn main() -> io::Result<()> {
 
     // Start HTTP server <4>
     HttpServer::new(app).bind("127.0.0.1:3000")?.run().await
-} 
+}
