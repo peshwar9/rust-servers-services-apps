@@ -1,0 +1,22 @@
+[package]
+name = "tutor-web-app-ssr"
+version = "0.1.0"
+authors = ["peshwar9 <par.esh1937@gmail.com>"]
+edition = "2018"
+
+
+[dependencies]
+# Actix web core library
+actix-web = "3"
+# Actix crate for serving static pages
+actix-files="0.5.0"
+# Templating library
+tera = "1.8.0"
+# Serialization and deserialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0.64"
+
+
+[dev-dependencies]
+# For automated tests
+actix-rt = "2.2.0"

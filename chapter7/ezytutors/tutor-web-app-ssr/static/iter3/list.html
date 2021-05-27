@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Actix web</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1 class="text-2xl font-bold mt-8 mb-5">Tutors list</h1>
+    <ul class="list-disc list-inside my-5 pl-2">
+        {% for tutor in tutors %}
+        <ol class="list-decimal list-inside my-5 pl-2">
+            <h5 class="text-1xl font-bold mb-4 mt-0">{{tutor.name}}</h5>
+        </ol>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
