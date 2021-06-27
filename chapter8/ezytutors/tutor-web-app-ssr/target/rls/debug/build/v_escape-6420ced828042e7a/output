@@ -1,0 +1,2 @@
+cargo:rustc-cfg=v_escape_sse
+cargo:rustc-cfg=v_escape_avx

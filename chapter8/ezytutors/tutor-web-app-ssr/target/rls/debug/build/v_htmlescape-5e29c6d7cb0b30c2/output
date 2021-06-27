@@ -1,0 +1,3 @@
+cargo:rustc-cfg=v_htmlescape_simd
+cargo:rustc-cfg=v_htmlescape_sse
+cargo:rustc-cfg=v_htmlescape_avx
