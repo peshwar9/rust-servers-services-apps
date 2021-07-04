@@ -17,6 +17,6 @@ create table ezy_course_c6
     course_price INT,
     course_language varchar(30),
     course_level varchar(30),
-    posted_time TIMESTAMP not null default now()
+    posted_time TIMESTAMP default now()
 
 );

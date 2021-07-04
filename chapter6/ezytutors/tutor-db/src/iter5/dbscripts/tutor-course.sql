@@ -1,6 +1,6 @@
 /* Drop tables if they already exist*/
 
-drop table if exists ezy_course_c6;
+drop table if exists ezy_course_c6 cascade;
 drop table if exists ezy_tutor_c6;
 
 /* Create tables. */
@@ -37,7 +37,7 @@ grant all privileges on table ezy_course_c6 to truuser;
 
 /* Load seed data for testing */
 insert into ezy_tutor_c6(tutor_id, tutor_name, tutor_pic_url,tutor_profile)
-values(1,'Merlene','http://s3.amazon.aws.com/pic1','Merlere is an experienced finance professional');
+values(1,'Merlene','http://s3.amazon.aws.com/pic1','Merlene is an experienced finance professional');
 
 insert into ezy_tutor_c6(tutor_id, tutor_name, tutor_pic_url,tutor_profile)
 values(2,'Frank','http://s3.amazon.aws.com/pic2','Frank is an expert nuclear engineer');
