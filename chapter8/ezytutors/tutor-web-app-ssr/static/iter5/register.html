@@ -16,12 +16,12 @@
         <h2>
             Tutor registration
         </h2>
-        <form action=/register method=POST>
+        <form action=/register method=POST id="registerform">
             <label for="userid">Enter username</label><br>
             <input type="text" name="username" value="{{current_username}}" autocomplete="username" minlength="6"
                 maxlength="12" required><br>
             <label for="password">Enter password</label><br>
-            <input type="password" name="password" value="{{current_password}}" uautocomplete="new-password"
+            <input type="password" name="password" value="{{current_password}}" autocomplete="new-password"
                 minlength="8" maxlength="12" required><br>
             <label for="confirm">Confirm password</label><br>
             <input type="password" name="confirmation" value="{{current_confirmation}}" autocomplete="new-password"
@@ -42,10 +42,5 @@
             <button type=submit id="button2">Sign in</button>
         </form>
     </div>
-    <p>
-    <div id="footer">
-        (c)Photo by Author
-    </div>
-    </p>
 
 </html>

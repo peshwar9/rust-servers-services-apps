@@ -22,7 +22,7 @@ async fn handle_post_tutor(
 ) -> Result<HttpResponse, Error> {
     let mut ctx = tera::Context::new();
     ctx.insert("name", &params.name);
-    ctx.insert("text", &"Welcome!".to_owned());
+    ctx.insert("text", "Welcome!");
     let s = tmpl
         .render("user.html", &ctx)
         .map_err(|_| error::ErrorInternalServerError("Template error"))?;

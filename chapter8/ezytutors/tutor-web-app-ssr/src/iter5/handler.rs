@@ -30,12 +30,14 @@ pub async fn handle_register(
     let s;
     let username = params.username.clone();
     let user = get_user_record(&app_state.db, username.to_string()).await;
-    if user.is_err() {
+    let user_not_found: bool = user.is_err();
+    // If user is not found in database, proceed to verification of passwords
+    if user_not_found {
         if params.password != params.confirmation {
             ctx.insert("error", "Passwords do not match");
             ctx.insert("current_username", &params.username);
-            ctx.insert("current_password", &params.password);
-            ctx.insert("current_confirmation", &params.confirmation);
+            ctx.insert("current_password", "");
+            ctx.insert("current_confirmation", "");
             ctx.insert("current_name", &params.name);
             ctx.insert("current_imageurl", &params.imageurl);
             ctx.insert("current_profile", &params.profile);
@@ -72,8 +74,8 @@ pub async fn handle_register(
     } else {
         ctx.insert("error", "User Id already exists");
         ctx.insert("current_username", &params.username);
-        ctx.insert("current_password", &params.password);
-        ctx.insert("current_confirmation", &params.confirmation);
+        ctx.insert("current_password", "");
+        ctx.insert("current_confirmation", "");
         ctx.insert("current_name", &params.name);
         ctx.insert("current_imageurl", &params.imageurl);
         ctx.insert("current_profile", &params.profile);

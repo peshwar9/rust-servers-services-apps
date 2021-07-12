@@ -63,9 +63,12 @@ cargo run --bin iter4
 
 From root folder of __tutor-web-service__, run:
 ```
-cargo run --bin iter6
+cargo run --bin iter5
 ```
 From a browser: 
 ```
 localhost:8080/tutors
 ```
+
+#### Debugging tip
+In case of difficulty in building the server due to missing/inconsistent dependencies, delete the ```cargo.lock``` file and ```target``` folder and rebuild.

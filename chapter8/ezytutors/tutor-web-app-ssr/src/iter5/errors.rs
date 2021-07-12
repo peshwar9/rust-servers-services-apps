@@ -11,7 +11,7 @@ pub enum EzyTutorError {
     TeraError(String),
 }
 #[derive(Debug, Serialize)]
-pub struct MyErrorResponse {
+pub struct AppErrorResponse {
     error_message: String,
 }
 impl std::error::Error for EzyTutorError {}
@@ -49,7 +49,7 @@ impl error::ResponseError for EzyTutorError {
         }
     }
     fn error_response(&self) -> HttpResponse {
-        HttpResponse::build(self.status_code()).json(MyErrorResponse {
+        HttpResponse::build(self.status_code()).json(AppErrorResponse {
             error_message: self.error_response(),
         })
     }
