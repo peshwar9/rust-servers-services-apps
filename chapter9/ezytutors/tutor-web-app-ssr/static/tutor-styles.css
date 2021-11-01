@@ -1,0 +1,61 @@
+.header {
+    padding: 20px;
+    text-align: center;
+    background: #fad980;
+    color: rgb(48, 40, 43);
+    font-size: 30px;
+}
+
+.center {
+    margin: auto;
+    width: 20%;
+    min-width: 150px;
+    border: 3px solid #ad5921;
+    padding: 10px;
+}
+
+body,
+html {
+    height: 100%;
+    margin: 0;
+    font-kerning: normal;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+div {
+    text-align: center;
+}
+
+div {
+    background-color: rgba(241, 235, 235, 0.719);
+}
+
+body {
+    background-image: url('/static/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 500px;
+}
+
+#button1,
+#button2 {
+    display: inline-block;
+}
+
+#footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 20px;
+
+}

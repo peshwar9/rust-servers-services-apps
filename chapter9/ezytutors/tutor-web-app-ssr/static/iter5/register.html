@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>Tutor registration</title>
+    <link rel="stylesheet" href="/static/tutor-styles.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Welcome to EzyTutor</h1>
+        <p>Start your own online tutor business in a few minutes</p>
+    </div>
+    <div class="center">
+        <h2>
+            Tutor registration
+        </h2>
+        <form action=/register method=POST id="registerform">
+            <label for="userid">Enter username</label><br>
+            <input type="text" name="username" value="{{current_username}}" autocomplete="username" minlength="6"
+                maxlength="12" required><br>
+            <label for="password">Enter password</label><br>
+            <input type="password" name="password" value="{{current_password}}" autocomplete="new-password"
+                minlength="8" maxlength="12" required><br>
+            <label for="confirm">Confirm password</label><br>
+            <input type="password" name="confirmation" value="{{current_confirmation}}" autocomplete="new-password"
+                minlength="8" maxlength="12" required><br>
+            <label for="userid">Enter tutor name</label><br>
+            <input type="text" name="name" value="{{current_name}}" maxlength="12" required><br>
+            <label for="imageurl">Enter tutor image url</label><br>
+            <input type="text" name="imageurl" value="{{current_imageurl}}" maxlength="30"><br>
+            <label for="profile">Brief tutor profile</label><br>
+            <input type="text" name="profile" value="{{current_profile}}" maxlength="40"><br>
+            <label for="error">
+                <p style="color:red">{{error}}</p>
+            </label>
+            <br>
+            <button type=submit id="button1">Register</button>
+        </form>
+        <form action=/signinform method=GET>
+            <button type=submit id="button2">Sign in</button>
+        </form>
+    </div>
+
+</html>

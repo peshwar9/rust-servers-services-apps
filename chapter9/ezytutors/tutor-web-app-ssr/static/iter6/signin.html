@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <title>Tutor registration</title>
+
+    <style>                                         
+        .header {
+            padding: 20px;
+            text-align: center;
+            background: #fad980;
+            color: rgb(48, 40, 43);
+            font-size: 30px;
+        }
+
+        .center {
+            margin: auto;
+            width: 20%;
+            min-width: 150px;
+            border: 3px solid #ad5921;
+            padding: 10px;
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-kerning: normal;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+        }
+
+        div {
+            text-align: center;
+        }
+
+        div {
+            background-color: rgba(241, 235, 235, 0.719);
+        }
+
+        body {
+            background-image: url('/static/background.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            height: 500px;
+        }
+
+        #button1,
+        #button2 {
+            display: inline-block;
+        }
+
+        #footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/
+            height: 20px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Welcome to EzyTutor</h1>
+        <p>Start your own online tutor business in a few minutes</p>
+    </div>
+
+    <div class="center">
+        <h2>
+            Tutor sign in
+        </h2>
+        <form action=/signin method=POST>       
+
+            <label for="userid">Enter username</label><br>            
+            <input type="text" name="username" autocomplete="username" value="{{current_name}}" minlength="6"
+                maxlength="12" required><br>
+            <label for="password">Enter password</label><br>        
+            <input type="password" name="password" autocomplete="new-password" value="{{current_password}}"
+                minlength="8" maxlength="12" required><br>
+            <label for="error">                                     
+                <p style="color:red">{{error}}</p>
+            </label><br>
+            <button type=submit id="button2">Sign in</button>       
+
+        </form>
+        <form action=/ method=GET>                                  
+            <button type=submit id="button2">Register</button>
+        </form>
+    </div>
+    <p>
+    <div id="footer">
+        (c)Photo by Author
+    </div>
+
+    </p>
+
+</html>
