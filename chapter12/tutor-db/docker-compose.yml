@@ -1,0 +1,39 @@
+version: '3'
+services:
+  db:
+    container_name: tutor-postgres
+    restart: always
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ezytutors
+    volumes:
+      - tutor-data:/var/lib/postgresql/data
+      - ./c12-data/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+      - ./c12-data/init-tables.sql:/docker-entrypoint-initdb.d/init-tables.sql
+    ports:
+      - 5432:5432
+    networks:
+      - tutor-network      
+  api:
+    restart: on-failure
+    container_name: tutor-webservice
+    build:
+      context: ./
+      dockerfile: Dockerfile-tutor-webservice
+      network: host
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - HOST_PORT=${HOST_PORT}
+    depends_on:
+      - db
+    ports:
+      - ":3000:3000"
+    networks:
+      - tutor-network        
+volumes:
+        tutor-data:
+networks:
+        tutor-network:
+

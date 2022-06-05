@@ -1,0 +1,33 @@
+# Use the main rust docker image
+FROM rust as build
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install libssl-dev
+RUN apt-get -y install pkg-config musl musl-dev musl-tools
+RUN rustup target add x86_64-unknown-linux-musl
+
+# copy app into docker image
+COPY . /app
+
+# Set the workdirectory
+WORKDIR /app
+
+# Set the env to point to localhost for postgres connection
+
+#ENV DATABASE_URL=${DATABASE_URL}
+
+# build the app
+RUN cargo build --target x86_64-unknown-linux-musl --release --bin iter5
+
+
+#CMD ["./target/x86_64-unknown-linux-musl/release/iter5"]
+
+# use alpine image 
+FROM alpine
+
+# copy app from builder
+COPY --from=build /app/target/x86_64-unknown-linux-musl/release/iter5 /app/iter5
+WORKDIR /app
+
+# start the application
+CMD ["./iter5"]
+
