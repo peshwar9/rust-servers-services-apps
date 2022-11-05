@@ -20,3 +20,6 @@ create table ezy_course_c6
     posted_time TIMESTAMP default now()
 
 );
+
+grant all privileges on table ezy_course_c6 to truuser;
+grant all privileges on all sequences in schema public to truuser;

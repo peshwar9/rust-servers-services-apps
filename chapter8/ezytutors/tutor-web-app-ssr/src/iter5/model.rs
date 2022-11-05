@@ -1,3 +1,6 @@
+
+// Listing 8.1 - start
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -21,6 +24,8 @@ pub struct TutorResponse {
 #[derive(Serialize, Deserialize, Debug, sqlx::FromRow)]
 pub struct User {
     pub username: String,
-    pub tutor_id: i32,
+    pub tutor_id: Option<i32>,
     pub user_password: String,
 }
+
+// Listing 8.1 - end

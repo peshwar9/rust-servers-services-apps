@@ -122,5 +122,5 @@ pub async fn delete_tutor_db(pool: &PgPool, tutor_id: i32) -> Result<String, Ezy
     .await
     .map_err(|_err| EzyTutorError::DBError("Unable to delete tutor ".into()))?;
 
-    Ok(format!("Deleted {} record", tutor_row))
+    Ok(format!("Deleted {:#?} record", tutor_row))
 }

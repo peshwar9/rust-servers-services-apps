@@ -1,6 +1,10 @@
+use std::env;
+
 use actix_files as fs;
-use actix_web::client::Client;
+// X use actix_web::client::Client;
+use awc::Client;
 use actix_web::{error, web, App, Error, HttpResponse, HttpServer, Result};
+use actix_web::web::Data;
 use serde::{Deserialize, Serialize};
 use tera::Tera;
 
@@ -13,7 +17,7 @@ pub struct Tutor {
 }
 
 async fn handle_get_tutors(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, Error> {
-    let client = Client::default();
+    let client = Client::new(); // Client::default();
 
     // Create request builder and send request
 
@@ -40,16 +44,18 @@ async fn handle_get_tutors(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, 
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Listening on: 127.0.0.1:8080!");
+    let addr = env::var("SERVER_ADDR").unwrap_or_else(|_| "127.0.0.1:8080".to_string());
+    // println!("Listening on: 127.0.0.1:8080");
+    println!("Listening on: {}",addr);
     HttpServer::new(|| {
         let tera = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/static/iter4/**/*")).unwrap();
 
         App::new()
-            .data(tera)
+            .app_data(Data::new(tera))
             .service(fs::Files::new("/static", "./static").show_files_listing())
             .service(web::resource("/tutors").route(web::get().to(handle_get_tutors)))
     })
-    .bind("127.0.0.1:8080")?
+    .bind(addr)?
     .run()
     .await
 }

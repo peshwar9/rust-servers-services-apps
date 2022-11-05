@@ -6,9 +6,10 @@ use serde_json::json;
 pub async fn handle_insert_course(
     _tmpl: web::Data<tera::Tera>,
     _app_state: web::Data<AppState>,
-    web::Path(tutor_id): web::Path<i32>,
+    /*web::Path(tutor_id)*/ path: web::Path<i32>,
     params: web::Json<NewCourse>,
 ) -> Result<HttpResponse, Error> {
+    let tutor_id = path.into_inner();
     let new_course = json!({
         "tutor_id": tutor_id,
         "course_name": &params.course_name,
@@ -25,7 +26,8 @@ pub async fn handle_insert_course(
     let res = awc_client
         .post("http://localhost:3000/courses/")
         .send_json(&new_course)
-        .await?
+        .await
+        .unwrap()
         .body()
         .await?;
     println!("Finished call: {:?}", res);
@@ -36,9 +38,10 @@ pub async fn handle_insert_course(
 pub async fn handle_update_course(
     _tmpl: web::Data<tera::Tera>,
     _app_state: web::Data<AppState>,
-    web::Path((tutor_id, course_id)): web::Path<(i32, i32)>,
+    /*web::Path((tutor_id, course_id))*/ path: web::Path<(i32, i32)>,
     params: web::Json<UpdateCourse>,
 ) -> Result<HttpResponse, Error> {
+    let (tutor_id, course_id) = path.into_inner();
     let update_course = json!({
         "course_name": &params.course_name,
         "course_description": &params.course_description,
@@ -55,7 +58,8 @@ pub async fn handle_update_course(
     let res = awc_client
         .put(update_url)
         .send_json(&update_course)
-        .await?
+        .await
+        .unwrap()
         .body()
         .await?;
     let course_response: UpdateCourseResponse = serde_json::from_str(&std::str::from_utf8(&res)?)?;
@@ -67,10 +71,11 @@ pub async fn handle_update_course(
 pub async fn handle_delete_course(
     _tmpl: web::Data<tera::Tera>,
     _app_state: web::Data<AppState>,
-    web::Path((tutor_id, course_id)): web::Path<(i32, i32)>,
+    /*web::Path((tutor_id, course_id))*/ path: web::Path<(i32, i32)>,
 ) -> Result<HttpResponse, Error> {
+    let (tutor_id, course_id) = path.into_inner();
     let awc_client = awc::Client::default();
     let delete_url = format!("http://localhost:3000/courses/{}/{}", tutor_id, course_id);
-    let _res = awc_client.delete(delete_url).send().await?;
+    let _res = awc_client.delete(delete_url).send().await.unwrap();
     Ok(HttpResponse::Ok().body("Course deleted"))
 }

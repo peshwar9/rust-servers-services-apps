@@ -1,7 +1,6 @@
 use super::models::Course;
 use super::state::AppState;
 use actix_web::{web, HttpResponse};
-use sqlx::postgres::PgPool;
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
     let health_check_response = &app_state.health_check_response;
@@ -12,32 +11,30 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
 }
 
 pub async fn get_courses_for_tutor(
-    app_state: web::Data<AppState>,
-    params: web::Path<(usize,)>,
+    _app_state: web::Data<AppState>,
+    _params: web::Path<(usize,)>,
 ) -> HttpResponse {
     HttpResponse::Ok().json("success")
 }
 
 pub async fn get_course_details(
-    app_state: web::Data<AppState>,
-    params: web::Path<(usize, usize)>,
+    _app_state: web::Data<AppState>,
+    _params: web::Path<(usize, usize)>,
 ) -> HttpResponse {
     HttpResponse::Ok().json("success")
 }
 
 pub async fn post_new_course(
-    new_course: web::Json<Course>,
-    app_state: web::Data<AppState>,
+    _new_course: web::Json<Course>,
+    _app_state: web::Data<AppState>,
 ) -> HttpResponse {
     HttpResponse::Ok().json("success")
 }
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::state;
     use actix_web::http::StatusCode;
-    use actix_web::test;
-    use chrono::{NaiveDate, NaiveDateTime};
+    use chrono::NaiveDate;
     use dotenv::dotenv;
     use sqlx::postgres::PgPool;
     use std::env;
@@ -47,7 +44,7 @@ mod tests {
     async fn get_all_courses_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -62,7 +59,7 @@ mod tests {
     async fn get_course_detail_test() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -77,7 +74,7 @@ mod tests {
     async fn post_course_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),

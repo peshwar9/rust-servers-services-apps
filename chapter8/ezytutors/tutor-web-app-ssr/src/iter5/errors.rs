@@ -1,3 +1,6 @@
+
+// Listing 8.2 - start
+
 use actix_web::{error, http::StatusCode, HttpResponse, Result};
 use serde::Serialize;
 use sqlx::error::Error as SQLxError;
@@ -72,3 +75,5 @@ impl From<SQLxError> for EzyTutorError {
         EzyTutorError::DBError(err.to_string())
     }
 }
+
+// Listing 8.2 - end

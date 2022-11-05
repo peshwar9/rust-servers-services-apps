@@ -38,7 +38,7 @@ pub async fn new_course(
 
 pub async fn get_courses_for_tutor(
     app_state: web::Data<AppState>,
-    params: web::Path<(usize)>,
+    params: web::Path<usize>,
 ) -> HttpResponse {
     let tutor_id: usize = params.0;
 

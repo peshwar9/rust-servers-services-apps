@@ -6,8 +6,9 @@ use actix_web::{web, HttpResponse};
 
 pub async fn get_courses_for_tutor(
     app_state: web::Data<AppState>,
-    web::Path(tutor_id): web::Path<i32>,
+    /*web::Path(tutor_id)*/ path: web::Path<i32>,
 ) -> Result<HttpResponse, EzyTutorError> {
+    let tutor_id = path.into_inner();
     get_courses_for_tutor_db(&app_state.db, tutor_id)
         .await
         .map(|courses| HttpResponse::Ok().json(courses))
@@ -15,8 +16,9 @@ pub async fn get_courses_for_tutor(
 
 pub async fn get_course_details(
     app_state: web::Data<AppState>,
-    web::Path((tutor_id, course_id)): web::Path<(i32, i32)>,
+    /*web::Path((tutor_id, course_id))*/ path: web::Path<(i32, i32)>,
 ) -> Result<HttpResponse, EzyTutorError> {
+    let (tutor_id, course_id) = path.into_inner();
     get_course_details_db(&app_state.db, tutor_id, course_id)
         .await
         .map(|course| HttpResponse::Ok().json(course))
@@ -27,8 +29,9 @@ curl -X PUT localhost:3000/courses/1/5 -H "Content-Type: application/json"  -d '
 pub async fn update_course_details(
     app_state: web::Data<AppState>,
     update_course: web::Json<UpdateCourse>,
-    web::Path((tutor_id, course_id)): web::Path<(i32, i32)>,
+     /*web::Path((tutor_id, course_id))*/ path: web::Path<(i32, i32)>,
 ) -> Result<HttpResponse, EzyTutorError> {
+    let (tutor_id, course_id) = path.into_inner();
     update_course_details_db(&app_state.db, tutor_id, course_id, update_course.into())
         .await
         .map(|course| HttpResponse::Ok().json(course))
@@ -50,8 +53,9 @@ pub async fn post_new_course(
 
 pub async fn delete_course(
     app_state: web::Data<AppState>,
-    web::Path((tutor_id, course_id)): web::Path<(i32, i32)>,
+    /*web::Path((tutor_id, course_id))*/ path: web::Path<(i32, i32)>,
 ) -> Result<HttpResponse, EzyTutorError> {
+    let (tutor_id, course_id) = path.into_inner();
     delete_course_db(&app_state.db, tutor_id, course_id)
         .await
         .map(|resp| HttpResponse::Ok().json(resp))
@@ -72,7 +76,7 @@ mod tests {
     async fn get_all_courses_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -87,7 +91,7 @@ mod tests {
     async fn get_course_detail_success_test() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -103,7 +107,7 @@ mod tests {
     async fn get_course_detail_failure_test() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -122,7 +126,7 @@ mod tests {
     async fn post_course_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -148,7 +152,7 @@ mod tests {
     async fn update_course_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -177,7 +181,7 @@ mod tests {
     async fn delete_test_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -192,7 +196,7 @@ mod tests {
     async fn delete_test_failure() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),

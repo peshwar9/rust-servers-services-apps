@@ -2,27 +2,27 @@
 name = "tutor-web-app-ssr"
 version = "0.1.0"
 authors = ["peshwar9"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 # Actix web core library
-actix-web = "3"
+actix-web = "4.2.1"
 # Actix crate for serving static pages
-actix-files="0.5.0"
+actix-files="0.6.2"
 # Templating library
-tera = "1.8.0"
+tera = "1.17.0"
 # Serialization and deserialization
-serde = { version = "1", features = ["derive"] }
-serde_json = "1.0.64"
+serde = { version = "1.0.144", features = ["derive"] }
+serde_json = "1.0.0"
 # Environment access
 dotenv = "0.15.0"
 # HTTP Client
-awc = "2.0.3"
+awc = "3.0.1"
 # Database access
-sqlx = {version = "0.3.5", default_features = false, features = ["postgres","runtime-tokio", "macros"]}
+sqlx = {version = "0.6.2", default_features = false, features = ["postgres","runtime-tokio-native-tls", "macros", "chrono"]}
 # Password hash
-rust-argon2 = "0.8.3"
+rust-argon2 = "1.0.0"
 
 [dev-dependencies]
 # For automated tests
-actix-rt = "2.2.0"
+actix-rt = "2.7.0"

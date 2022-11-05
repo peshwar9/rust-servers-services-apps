@@ -14,7 +14,7 @@ pub struct Course {
     pub course_price: Option<i32>,
     pub course_language: Option<String>,
     pub course_level: Option<String>,
-    pub posted_time: NaiveDateTime,
+    pub posted_time: Option<NaiveDateTime>,
 }
 
 #[derive(Deserialize, Debug, Clone)]

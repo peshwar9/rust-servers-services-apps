@@ -1,6 +1,6 @@
 use actix_files as fs;
-use actix_web::client::Client;
 use actix_web::{error, web, App, Error, HttpResponse, HttpServer, Result};
+use actix_web::web::Data;
 use serde::{Deserialize, Serialize};
 use tera::Tera;
 
@@ -13,7 +13,7 @@ pub struct Tutor {
 }
 
 async fn handle_get_tutors(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, Error> {
-    let client = Client::default();
+    let client = awc::Client::default();
 
     // Create request builder and send request
 
@@ -45,11 +45,11 @@ async fn main() -> std::io::Result<()> {
         let tera = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/static/iter4/**/*")).unwrap();
 
         App::new()
-            .data(tera)
+            .app_data(Data::new(tera))
             .service(fs::Files::new("/static", "./static").show_files_listing())
             .service(web::resource("/tutors").route(web::get().to(handle_get_tutors)))
     })
-    .bind("127.0.0.1:8080")?
+    .bind("127.0.0.1:8085")?
     .run()
     .await
 }

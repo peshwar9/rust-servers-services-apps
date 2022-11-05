@@ -1,4 +1,7 @@
+use std::env;
+
 use actix_web::{error, web, App, Error, HttpResponse, HttpServer, Result};
+use actix_web::web::Data;
 use serde::{Deserialize, Serialize};
 use tera::Tera;
 
@@ -32,13 +35,16 @@ async fn handle_post_tutor(
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    println!("Listening on: 127.0.0.1:8080");
+    let addr = env::var("SERVER_ADDR").unwrap_or_else(|_| "127.0.0.1:8080".to_string());
+    // println!("Listening on: 127.0.0.1:8080");
+    println!("Listening on: {}",addr);
     HttpServer::new(|| {
         let tera = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/static/iter2/**/*")).unwrap();
 
-        App::new().data(tera).configure(app_config)
+        App::new().app_data(Data::new(tera)).configure(app_config)
     })
-    .bind("127.0.0.1:8080")?
+    // .bind("127.0.0.1:8080")?
+    .bind(addr)?
     .run()
     .await
 }
@@ -55,11 +61,12 @@ fn app_config(config: &mut web::ServiceConfig) {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use actix_web::http::{header::CONTENT_TYPE, HeaderValue, StatusCode};
+    use actix_web::http::header::{CONTENT_TYPE, HeaderValue};
+    use actix_web::http::StatusCode;
     use actix_web::web::Form;
 
-    use actix_web::dev::{HttpResponseBuilder, Service, ServiceResponse};
-    use actix_web::test::{self, TestRequest};
+    use actix_web::dev::{Service, ServiceResponse};
+    use actix_web::test;
 
     // Unit test case
     #[actix_rt::test]
@@ -82,7 +89,7 @@ mod tests {
     #[actix_rt::test]
     async fn handle_post_1_integration_test() {
         let tera = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/static/iter2/**/*")).unwrap();
-        let mut app = test::init_service(App::new().data(tera).configure(app_config)).await;
+        let app = test::init_service(App::new().app_data(Data::new(tera)).configure(app_config)).await;
 
         let req = test::TestRequest::post()
             .uri("/tutors")

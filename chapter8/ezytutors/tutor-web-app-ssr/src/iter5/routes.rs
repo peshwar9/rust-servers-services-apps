@@ -1,3 +1,6 @@
+
+// Listing 7.0 - start
+
 use crate::handler::{handle_register, show_register_form};
 use actix_files as fs;
 use actix_web::web;
@@ -10,3 +13,5 @@ pub fn app_config(config: &mut web::ServiceConfig) {
             .service(web::resource("/register").route(web::post().to(handle_register))),
     );
 }
+
+// Listing 7.0 - end

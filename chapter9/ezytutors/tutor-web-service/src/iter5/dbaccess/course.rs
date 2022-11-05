@@ -70,7 +70,7 @@ pub async fn delete_course_db(
     )
     .execute(pool)
     .await?;
-    Ok(format!("Deleted {} record", course_row))
+    Ok(format!("Deleted {:#?} record", course_row))
 }
 
 // Update course details

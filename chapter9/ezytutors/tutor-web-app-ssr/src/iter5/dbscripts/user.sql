@@ -10,3 +10,6 @@ create table ezyweb_user
     tutor_id INT,    
     user_password CHAR(100) not null
 );
+
+grant all privileges on table ezyweb_user to truuser;
+grant all privileges on all sequences in schema public to truuser;

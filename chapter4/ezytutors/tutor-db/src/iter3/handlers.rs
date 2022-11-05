@@ -18,7 +18,7 @@ pub async fn get_courses_for_tutor(
     params: web::Path<(usize,)>,
 ) -> HttpResponse {
     let tuple = params.0;
-    let tutor_id: i32 = i32::try_from(tuple.0).unwrap();
+    let tutor_id: i32 = i32::try_from(tuple/*.0*/).unwrap();
     let courses = get_courses_for_tutor_db(&app_state.db, tutor_id).await;
     HttpResponse::Ok().json(courses)
 }
@@ -27,7 +27,7 @@ pub async fn get_course_details(
     app_state: web::Data<AppState>,
     params: web::Path<(usize, usize)>,
 ) -> HttpResponse {
-    let tuple = params.0;
+    let tuple = params/*.0*/;
     let tutor_id: i32 = i32::try_from(tuple.0).unwrap();
     let course_id: i32 = i32::try_from(tuple.1).unwrap();
     let course = get_course_details_db(&app_state.db, tutor_id, course_id).await;
@@ -60,7 +60,7 @@ mod tests {
     async fn get_all_courses_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -75,7 +75,7 @@ mod tests {
     async fn get_course_detail_test() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),
@@ -90,7 +90,7 @@ mod tests {
     async fn post_course_success() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
-        let pool: PgPool = PgPool::new(&database_url).await.unwrap();
+        let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
         let app_state: web::Data<AppState> = web::Data::new(AppState {
             health_check_response: "".to_string(),
             visit_count: Mutex::new(0),

@@ -54,7 +54,8 @@ pub async fn handle_register(
             let res = awc_client
                 .post("http://localhost:3000/tutors/")
                 .send_json(&new_tutor)
-                .await?
+                .await
+                .unwrap()
                 .body()
                 .await?;
             let tutor_response: TutorResponse = serde_json::from_str(&std::str::from_utf8(&res)?)?;
@@ -66,7 +67,7 @@ pub async fn handle_register(
                 argon2::hash_encoded(params.password.clone().as_bytes(), salt, &config).unwrap();
             let user = User {
                 username,
-                tutor_id: tutor_response.tutor_id,
+                tutor_id: Some(tutor_response.tutor_id),
                 user_password: hash,
             };
             let _tutor_created = post_new_user(&app_state.db, user).await?;

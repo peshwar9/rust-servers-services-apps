@@ -1,5 +1,6 @@
 use actix_files as fs;
 use actix_web::{error, web, App, Error, HttpResponse, HttpServer, Result};
+use actix_web::web::Data;
 use tera::Tera;
 
 async fn index(tmpl: web::Data<tera::Tera>) -> Result<HttpResponse, Error> {
@@ -19,7 +20,7 @@ async fn main() -> std::io::Result<()> {
         let tera = Tera::new(concat!(env!("CARGO_MANIFEST_DIR"), "/static/iter1/**/*")).unwrap();
 
         App::new()
-            .data(tera)
+            .app_data(Data::new(tera))
             .service(fs::Files::new("/static", "./static").show_files_listing())
             .service(web::resource("/").route(web::get().to(index)))
     })
