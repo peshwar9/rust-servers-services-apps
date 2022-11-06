@@ -7,7 +7,7 @@ fn main() {
         let mut stream = stream.unwrap();
         println!("Connection established");
         let mut buffer = [0; 1024];
-        stream.read(&mut buffer).unwrap();
-        stream.write(&mut buffer).unwrap();
+        let n = stream.read(&mut buffer[..]).unwrap();
+        stream.write(&buffer[..n]).unwrap();
     }
 }
