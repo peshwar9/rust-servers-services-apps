@@ -17,8 +17,7 @@ pub async fn health_check_handler(
 
 pub async fn get_courses_for_tutor(
     app_state: web::Data<AppState>,
-    /*web::Path(tutor_id):*/ path: web::Path<i32>,
-    // Nice use for pattern in function call but does not work anymore - private fields
+    path: web::Path<i32>,
 ) -> Result<HttpResponse, EzyTutorError> {
     let tutor_id = path.into_inner();
     get_courses_for_tutor_db(&app_state.db, tutor_id)
@@ -28,8 +27,7 @@ pub async fn get_courses_for_tutor(
 
 pub async fn get_course_details(
     app_state: web::Data<AppState>,
-    /* web::Path((tutor_id, course_id)):*/ path:  web::Path<(i32, i32)>,
-    // Nice use for pattern in function call but does not work anymore - private fields
+    path:  web::Path<(i32, i32)>,
 ) -> Result<HttpResponse, EzyTutorError> {
     let (tutor_id, course_id) = path.into_inner();
     get_course_details_db(&app_state.db, tutor_id, course_id)

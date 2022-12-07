@@ -37,7 +37,10 @@ async fn main() -> io::Result<()> {
             .configure(course_routes)
     };
 
+    let hostname_port = env::var("SERVER_HOSTNAME_PORT").expect("SERVER_HOSTNAME_PORT is not set in .env file");
+
     //Start HTTP server
 
-    HttpServer::new(app).bind("127.0.0.1:3000")?.run().await
+    HttpServer::new(app).bind(hostname_port).unwrap().run().await
+
 }

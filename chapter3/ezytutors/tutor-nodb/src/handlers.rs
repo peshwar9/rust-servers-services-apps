@@ -24,8 +24,9 @@ pub async fn new_course(
         .clone()
         .into_iter()
         .filter(|course| course.tutor_id == new_course.tutor_id)
-        .collect::<Vec<Course>>()
-        .len();
+        //.collect::<Vec<Course>>()
+        //.len();
+        .count();
     let new_course = Course {
         tutor_id: new_course.tutor_id,
         course_id: Some(course_count_for_user + 1),
