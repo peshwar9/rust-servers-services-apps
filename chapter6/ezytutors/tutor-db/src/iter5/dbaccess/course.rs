@@ -63,14 +63,14 @@ pub async fn delete_course_db(
     course_id: i32,
 ) -> Result<String, EzyTutorError> {
     // Prepare SQL statement
-    let course_row = sqlx::query!(
+    let rows_deleted = sqlx::query!(
         "DELETE FROM ezy_course_c6 where tutor_id = $1 and course_id = $2",
         tutor_id,
         course_id,
     )
     .execute(pool)
     .await?;
-    Ok(format!("Deleted {:#?} record", course_row))
+    Ok(format!("Deleted {:#?} record", rows_deleted))
 }
 
 // Update course details

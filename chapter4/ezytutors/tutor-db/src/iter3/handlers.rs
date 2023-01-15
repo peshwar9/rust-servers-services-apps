@@ -1,7 +1,6 @@
 use super::db_access::*;
 use super::models::Course;
 use super::state::AppState;
-use std::convert::TryFrom;
 
 use actix_web::{web, HttpResponse};
 
@@ -15,21 +14,22 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
 
 pub async fn get_courses_for_tutor(
     app_state: web::Data<AppState>,
-    params: web::Path<(usize,)>,
+    params: web::Path<(i32,)>,
 ) -> HttpResponse {
     let tuple = params.0;
-    let tutor_id: i32 = i32::try_from(tuple/*.0*/).unwrap();
+    let tutor_id: i32 = tuple;
     let courses = get_courses_for_tutor_db(&app_state.db, tutor_id).await;
     HttpResponse::Ok().json(courses)
 }
 
 pub async fn get_course_details(
     app_state: web::Data<AppState>,
-    params: web::Path<(usize, usize)>,
-) -> HttpResponse {
-    let tuple = params/*.0*/;
-    let tutor_id: i32 = i32::try_from(tuple.0).unwrap();
-    let course_id: i32 = i32::try_from(tuple.1).unwrap();
+    params: web::Path<(i32, i32)>,
+) -> HttpResponse { /*
+    let tuple = params;
+    let tutor_id: i32 = tuple.0;
+    let course_id: i32 = tuple.1; */
+    let (tutor_id, course_id) = (params.0,params.1);
     let course = get_course_details_db(&app_state.db, tutor_id, course_id).await;
     HttpResponse::Ok().json(course)
 }
@@ -66,7 +66,7 @@ mod tests {
             visit_count: Mutex::new(0),
             db: pool,
         });
-        let tutor_id: web::Path<(usize,)> = web::Path::from((1,));
+        let tutor_id: web::Path<(i32,)> = web::Path::from((1,));
         let resp = get_courses_for_tutor(app_state, tutor_id).await;
         assert_eq!(resp.status(), StatusCode::OK);
     }
@@ -81,7 +81,7 @@ mod tests {
             visit_count: Mutex::new(0),
             db: pool,
         });
-        let params: web::Path<(usize, usize)> = web::Path::from((1, 1));
+        let params: web::Path<(i32, i32)> = web::Path::from((1, 1));
         let resp = get_course_details(app_state, params).await;
         assert_eq!(resp.status(), StatusCode::OK);
     }

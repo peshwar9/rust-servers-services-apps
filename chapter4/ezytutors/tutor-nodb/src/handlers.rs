@@ -38,9 +38,9 @@ pub async fn new_course(
 
 pub async fn get_courses_for_tutor(
     app_state: web::Data<AppState>,
-    params: web::Path<usize>,
+    params: web::Path<i32>,
 ) -> HttpResponse {
-    let tutor_id: usize = params.0;
+    let tutor_id: i32 = params.0;
 
     let filtered_courses = app_state
         .courses
@@ -54,13 +54,13 @@ pub async fn get_courses_for_tutor(
     if filtered_courses.len() > 0 {
         HttpResponse::Ok().json(filtered_courses)
     } else {
-        HttpResponse::Ok().json("No courses found for user".to_string())
+        HttpResponse::Ok().json("No courses found for tutor".to_string())
     }
 }
 
 pub async fn get_course_detail(
     app_state: web::Data<AppState>,
-    params: web::Path<(usize, usize)>,
+    params: web::Path<(i32, i32)>,
 ) -> HttpResponse {
     let (tutor_id, course_id) = params.0;
     let selected_course = app_state
@@ -109,7 +109,7 @@ mod tests {
             visit_count: Mutex::new(0),
             courses: Mutex::new(vec![]),
         });
-        let tutor_id: web::Path<(usize)> = web::Path::from((1));
+        let tutor_id: web::Path<(i32)> = web::Path::from((1));
         let resp = get_courses_for_tutor(app_state, tutor_id).await;
         assert_eq!(resp.status(), StatusCode::OK);
     }
@@ -121,7 +121,7 @@ mod tests {
             visit_count: Mutex::new(0),
             courses: Mutex::new(vec![]),
         });
-        let params: web::Path<(usize, usize)> = web::Path::from((1, 1));
+        let params: web::Path<(i32, i32)> = web::Path::from((1, 1));
         let resp = get_course_detail(app_state, params).await;
         assert_eq!(resp.status(), StatusCode::OK);
     }

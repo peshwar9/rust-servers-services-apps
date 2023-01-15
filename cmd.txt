@@ -1,1 +1,0 @@
-for f in `cat migration-docs/rs-filelist.txt`; do echo `basename $f` `dirname $f`;done | grep -v target|sort

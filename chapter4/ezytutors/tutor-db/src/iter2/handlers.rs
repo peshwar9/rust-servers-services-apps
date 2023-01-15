@@ -12,14 +12,14 @@ pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpRespons
 
 pub async fn get_courses_for_tutor(
     _app_state: web::Data<AppState>,
-    _params: web::Path<(usize,)>,
+    _params: web::Path<(i32,)>,
 ) -> HttpResponse {
     HttpResponse::Ok().json("success")
 }
 
 pub async fn get_course_details(
     _app_state: web::Data<AppState>,
-    _params: web::Path<(usize, usize)>,
+    _params: web::Path<(i32, i32)>,
 ) -> HttpResponse {
     HttpResponse::Ok().json("success")
 }
@@ -50,7 +50,7 @@ mod tests {
             visit_count: Mutex::new(0),
             db: pool,
         });
-        let tutor_id: web::Path<(usize,)> = web::Path::from((1,));
+        let tutor_id: web::Path<(i32,)> = web::Path::from((1,));
         let resp = get_courses_for_tutor(app_state, tutor_id).await;
         assert_eq!(resp.status(), StatusCode::OK);
     }
@@ -65,7 +65,7 @@ mod tests {
             visit_count: Mutex::new(0),
             db: pool,
         });
-        let params: web::Path<(usize, usize)> = web::Path::from((1, 2));
+        let params: web::Path<(i32, i32)> = web::Path::from((1, 2));
         let resp = get_course_details(app_state, params).await;
         assert_eq!(resp.status(), StatusCode::OK);
     }
