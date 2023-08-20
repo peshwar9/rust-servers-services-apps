@@ -1,0 +1,15 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/rust:1": {},
+    "ghcr.io/devcontainers-contrib/features/neovim-apt-get:1": {},
+    "ghcr.io/devcontainers/features/python:1": {},
+    "ghcr.io/devcontainers-contrib/features/zsh-plugins:0": {},
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/itsmechlark/features/postgresql:1": {},
+    "ghcr.io/devcontainers/features/node:1": {},
+    "ghcr.io/jungaretti/features/ripgrep:1": {},
+    
+
+  }
+}
