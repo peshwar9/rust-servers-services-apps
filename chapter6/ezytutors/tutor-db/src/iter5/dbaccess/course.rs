@@ -94,45 +94,45 @@ pub async fn update_course_details_db(
 
     // Construct the parameters for update:
 
-    let name: String = if let Some(name) = update_course.course_name {
-        name
+    let name = if let Some(_) = update_course.course_name {
+        update_course.course_name
     } else {
-        current_course_row.course_name
+        Some(current_course_row.course_name)
     };
-    let description: String = if let Some(desc) = update_course.course_description {
-        desc
+    let description = if let Some(_) = update_course.course_description {
+        update_course.course_description
     } else {
-        current_course_row.course_description.unwrap_or_default()
+        current_course_row.course_description
     };
-    let format: String = if let Some(format) = update_course.course_format {
-        format
+    let format = if let Some(_) = update_course.course_format {
+        update_course.course_format
     } else {
-        current_course_row.course_format.unwrap_or_default()
+        current_course_row.course_format
     };
-    let structure: String = if let Some(structure) = update_course.course_structure {
-        structure
+    let structure = if let Some(_) = update_course.course_structure {
+        update_course.course_structure
     } else {
-        current_course_row.course_structure.unwrap_or_default()
+        current_course_row.course_structure
     };
-    let duration: String = if let Some(duration) = update_course.course_duration {
-        duration
+    let duration = if let Some(_) = update_course.course_duration {
+        update_course.course_duration
     } else {
-        current_course_row.course_duration.unwrap_or_default()
+        current_course_row.course_duration
     };
-    let level: String = if let Some(level) = update_course.course_level {
-        level
+    let level = if let Some(_) = update_course.course_level {
+        update_course.course_level
     } else {
-        current_course_row.course_level.unwrap_or_default()
+        current_course_row.course_level
     };
-    let language: String = if let Some(language) = update_course.course_language {
-        language
+    let language = if let Some(_) = update_course.course_language {
+        update_course.course_language
     } else {
-        current_course_row.course_language.unwrap_or_default()
+        current_course_row.course_language
     };
-    let price = if let Some(price) = update_course.course_price {
-        price
+    let price = if let Some(_) = update_course.course_price {
+        update_course.course_price
     } else {
-        current_course_row.course_price.unwrap_or_default()
+        current_course_row.course_price
     };
 
     // Prepare SQL statement
